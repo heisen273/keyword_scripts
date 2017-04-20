@@ -1,7 +1,7 @@
 import os
 import re
 files = [f for f in os.listdir('/home/erowz/KeywordCollections') if '.' in f and f.split('.')[1] == 'csv']
-#files = ['AR.csv']
+#files = ['IT.csv']
 print('cleaing old manipulated keyword collections. . . . .\n\n')
 os.system('rm -rf ./Manipulated_*')
 
@@ -17,6 +17,8 @@ for item in files:
 				tmp = line.split(',')
 				tmp[5] = tmp1[0]
 			elif len(tmp1)==2:
+				if tmp1[0]==tmp1[1]:
+					print('lol')
 				line = line.replace('"'+tmp1[0]+'",',',')
 				line = line.replace('"'+tmp1[1]+'",',',')
 				tmp = line.split(',')
@@ -26,6 +28,10 @@ for item in files:
 				
 				line = line.strip()
 				tmp = line.split(',')
+			
+			if len(tmp) != 11:
+				print('1 skip')
+				continue
 			tmp.remove(tmp[0])
 			tmp.insert(1,'/'+tmp[0].replace(' ','-'))
 			
@@ -44,6 +50,13 @@ for item in files:
 				tmp.insert(9,'true')
 			if tmp[10] != 'true': 
 				tmp[10] = ''
+			if len(tmp)!=12:
+				print('2 skip')
+				continue
+			if '|' in tmp:
+				print('3 skip')
+				continue
+			
 			fl.write('|'.join(tmp)+'\n')
 		print(item+' processed')
 
