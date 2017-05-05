@@ -1,8 +1,10 @@
 import os
 import re
+os.chdir(os.path.dirname(os.path.realpath(__file__)))
 files = [f for f in os.listdir('/home/erowz/KeywordCollections') if '.' in f and f.split('.')[1] == 'csv']
-#files = ['IT.csv']
+#files = ['CA.csv']
 print('cleaing old manipulated keyword collections. . . . .\n\n')
+
 os.system('rm -rf ./Manipulated_*')
 
 for item in files:

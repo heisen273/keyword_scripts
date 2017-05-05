@@ -1,6 +1,6 @@
 import os
 import subprocess
-
+os.chdir(os.path.dirname(os.path.realpath(__file__)))
 files = [f for f in os.listdir('./') if f.split('_')[0] == 'Manipulated']
 #print(files)
 #files = ['Manipulated_bpfs-fr2.csv']
@@ -18,9 +18,9 @@ for f in files:
 	#print subfiles
 	#for fl in subfiles:
 	if f == 'Manipulated_FR.csv':
-			s = subprocess.Popen(['bq','load','--max_bad_records=50','--field_delimiter=|','KeywordCollections.'+f.split('_')[1].split('.')[0]+'_Keywords', './Manipulated_bpfs-fr2.csv'], stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+			s = subprocess.Popen(['bq','load','--max_bad_records=50','--field_delimiter=|','--allow_jagged_rows','--allow_quoted_newlines','KeywordCollections.'+f.split('_')[1].split('.')[0]+'_Keywords', './Manipulated_bpfs-fr2.csv'], stdout=subprocess.PIPE,stderr=subprocess.PIPE)
 	else:
-			s = subprocess.Popen(['bq','load','--max_bad_records=50','--field_delimiter=|','KeywordCollections.'+f.split('_')[1].split('.')[0]+'_Keywords', './'+f], stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+			s = subprocess.Popen(['bq','load','--max_bad_records=50','--field_delimiter=|','--allow_jagged_rows','--allow_quoted_newlines','KeywordCollections.'+f.split('_')[1].split('.')[0]+'_Keywords', './'+f], stdout=subprocess.PIPE,stderr=subprocess.PIPE)
 			stdout = s.stdout.readlines()
 	print('stdout',stdout)
 	if stdout == ['\n', '\n']:
